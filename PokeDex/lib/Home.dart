@@ -1,5 +1,6 @@
 import 'package:PokeDex/Api/ApiClass.dart';
 import 'package:PokeDex/Models/PokemonModel.dart';
+import 'package:PokeDex/pokemon_Details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -51,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => PokemonDetail(
-                          data: data[index],
+                          name: data[index].name,
                         ))),
             child: Card(
               shape: RoundedRectangleBorder(),
@@ -77,16 +78,5 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         });
-  }
-}
-
-class PokemonDetail extends StatelessWidget {
-  final Map<String, dynamic> data;
-
-  const PokemonDetail({Key key, this.data}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    print(data);
-    return Container();
   }
 }

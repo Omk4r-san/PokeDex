@@ -20,8 +20,8 @@ class ApiManager {
     return null;
   }
 
-  Future<PokemonDetailModel> getPokemonDetail() async {
-    String url = "https://pokeapi.co/api/v2/pokemon/bulbasaur";
+  Future<PokemonDetailModel> getPokemonDetail(String name) async {
+    String url = "https://pokeapi.co/api/v2/pokemon/$name";
     var response = await http.get(url);
     try {
       if (response.statusCode == 200) {
