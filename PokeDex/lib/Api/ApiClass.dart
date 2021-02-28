@@ -21,11 +21,13 @@ class ApiManager {
   }
 
   Future<PokemonDetailModel> getPokemonDetail(String name) async {
+    print(name);
     String url = "https://pokeapi.co/api/v2/pokemon/$name";
     var response = await http.get(url);
     try {
       if (response.statusCode == 200) {
         var jsonString = response.body;
+        // print(jsonString);
         final pokemonDetail = pokemonDetailModelFromJson(jsonString.toString());
         return pokemonDetail;
       }
