@@ -25,13 +25,27 @@ class _PokemonDetailState extends State<PokemonDetail> {
     } else if (data == "grass") {
       typeColor = Colors.teal;
     } else if (data == "normal") {
-      typeColor = Colors.white;
+      typeColor = Color(0xfff8ac4d0);
     } else if (data == "electric") {
-      typeColor = Colors.yellow;
+      typeColor = Color(0xfffffbe0f);
     } else if (data == "poison") {
-      typeColor = Colors.purple;
+      typeColor = Color(0xfff845ec2);
     } else if (data == "bug") {
       typeColor = Color(0xfffC9E171);
+    } else if (data == "ground") {
+      typeColor = Color(0xffff85603f);
+    } else if (data == "fighting") {
+      typeColor = Color(0xfffe1bc91);
+    } else if (data == "psychic") {
+      typeColor = Color(0xfffee99a0);
+    } else if (data == "rock") {
+      typeColor = Color(0xfffaaaaaa);
+    } else if (data == "ghost") {
+      typeColor = Color(0xfff1e212d);
+    } else if (data == "ice") {
+      typeColor = Color(0xfffa1cae2);
+    } else if (data == "dragon") {
+      typeColor = Color(0xfff00917c);
     } else {
       typeColor = Colors.grey;
     }
@@ -132,7 +146,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.teal,
+                            color: background(data.types[index].type.name),
                             borderRadius: BorderRadius.circular(23)),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -291,7 +305,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
             itemCount: data.stats.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: const EdgeInsets.only(left: 25.0),
+                padding: const EdgeInsets.only(left: 18.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
