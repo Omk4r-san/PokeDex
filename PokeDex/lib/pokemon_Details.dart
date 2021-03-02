@@ -1,14 +1,16 @@
 import 'package:PokeDex/Api/ApiClass.dart';
 import 'package:PokeDex/Models/PokemonDetails_model.dart';
+import 'package:PokeDex/Models/PokemonModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:PokeDex/Home.dart';
 
 class PokemonDetail extends StatefulWidget {
   final String name, image;
   final Color typeColor;
+  final List<Evolution> evolution;
 
-  const PokemonDetail({Key key, this.name, this.image, this.typeColor})
+  const PokemonDetail(
+      {Key key, this.name, this.image, this.typeColor, this.evolution})
       : super(key: key);
 
   @override
@@ -16,6 +18,18 @@ class PokemonDetail extends StatefulWidget {
 }
 
 class _PokemonDetailState extends State<PokemonDetail> {
+  var _evolution;
+  int length = 4;
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Color background(data) {
     Color typeColor;
     if (data == "fire") {
@@ -54,9 +68,10 @@ class _PokemonDetailState extends State<PokemonDetail> {
 
   @override
   Widget build(BuildContext context) {
+    String pokemon = widget.name;
     return Scaffold(
       body: FutureBuilder<PokemonDetailModel>(
-        future: ApiManager().getPokemonDetail(widget.name.toLowerCase()),
+        future: ApiManager().getPokemonDetail(pokemon.toLowerCase()),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return //Column(
@@ -83,6 +98,45 @@ class _PokemonDetailState extends State<PokemonDetail> {
         },
       ),
     );
+  }
+
+  _evolutiontab() {
+    if (widget.evolution != null) {
+      _evolution = widget.evolution;
+      return ListView.builder(
+        itemCount: _evolution.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 50,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {});
+                  },
+                  child: Card(
+                    color: widget.typeColor,
+                    elevation: 5,
+                    child: Center(
+                      child: Text(
+                        _evolution[index].name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ));
+        },
+      );
+    } else {
+      _evolution = Center(
+        child: Text(
+          "no evolution",
+          style: TextStyle(color: Colors.black),
+        ),
+      );
+    }
   }
 
   Widget mainPage(data) {
@@ -169,7 +223,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
   Widget _tabBar(data) {
     return Container(
         child: DefaultTabController(
-            length: 3,
+            length: length,
             initialIndex: 0,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -181,38 +235,22 @@ class _PokemonDetailState extends State<PokemonDetail> {
                       indicatorSize: TabBarIndicatorSize.label,
                       tabs: [
                         Tab(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                  child: Text(
-                                "About",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )),
-                            ],
+                          child: Text(
+                            "About",
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Tab(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                  child: Text("Basic Stats",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold))),
-                            ],
-                          ),
+                          child: Text("Basic Stats",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         ),
                         Tab(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                  child: Text("Moves",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold))),
-                            ],
-                          ),
+                          child: Text("Moves",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                        ),
+                        Tab(
+                          child: Text("Evolution",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       ],
                     ),
@@ -235,6 +273,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
                         Container(
                           child: Center(child: _moves(data)),
                         ),
+                        Container(child: _evolutiontab()),
                       ],
                     ),
                   )
@@ -294,9 +333,6 @@ class _PokemonDetailState extends State<PokemonDetail> {
   }
 
   Widget _baseStat(data) {
-    print(
-      data.stats[0].baseStat.toDouble(),
-    );
     return ListView(
       children: [
         Container(

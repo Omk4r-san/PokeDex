@@ -21,7 +21,6 @@ class ApiManager {
   }
 
   Future<PokemonDetailModel> getPokemonDetail(String name) async {
-    print(name);
     String url = "https://pokeapi.co/api/v2/pokemon/$name";
     var response = await http.get(url);
     try {

@@ -53,6 +53,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  List<String> evolution(index, data) {
+    List<String> evo;
+    String form;
+    for (var i = 0; i < data[0].nextEvolution.length; i++) {
+      form = (data[index].nextEvolution[i].name);
+      evo.add(form);
+    }
+    return evo;
+  }
+
   Widget mainPage(data) {
     return GridView.builder(
         itemCount: data.length,
@@ -64,10 +74,10 @@ class _HomePageState extends State<HomePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => PokemonDetail(
-                          name: data[index].name,
-                          image: data[index].img,
-                          typeColor: background(data[index].type[0]),
-                        ))),
+                        name: data[index].name,
+                        image: data[index].img,
+                        typeColor: background(data[index].type[0]),
+                        evolution: data[index].nextEvolution ?? null))),
             child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
@@ -124,7 +134,7 @@ class _HomePageState extends State<HomePage> {
     } else if (data == Type.GRASS) {
       typeColor = Colors.teal;
     } else if (data == Type.NORMAL) {
-      typeColor = Color(0xfff8ac4d0);
+      typeColor = const Color(0xfff8ac4d0);
     } else if (data == Type.ELECTRIC) {
       typeColor = Color(0xffffffbe0f);
     } else if (data == Type.POISON) {
