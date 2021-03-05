@@ -74,22 +74,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
         future: ApiManager().getPokemonDetail(pokemon.toLowerCase()),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return //Column(
-                //children: [
-                //_abilities(snapshot.data.abilities),
-                // Container(
-                //   height: 30,
-                //   child: ListView.builder(
-                //     scrollDirection: Axis.horizontal,
-                //     itemCount: moves,
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return Text(snapshot.data.moves[index].move.name);
-                //     },
-                //   ),
-                // ),
-                // ],
-                // );
-
+            return 
                 mainPage(snapshot.data);
           }
           return Center(
@@ -112,7 +97,9 @@ class _PokemonDetailState extends State<PokemonDetail> {
                 height: 50,
                 child: GestureDetector(
                   onTap: () {
-                    setState(() {});
+                    setState(() {
+                      
+                    });
                   },
                   child: Card(
                     color: widget.typeColor,
